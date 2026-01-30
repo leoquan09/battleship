@@ -1,0 +1,5 @@
+const gameboard = () => {
+
+}
+
+export { gameboard };

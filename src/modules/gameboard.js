@@ -1,34 +1,60 @@
 export const gameboard = () => {
-    let occupiedSpots = [];
-    let missedAttacks = [];
+    const board = [...Array(10)].map(() => Array(10).fill(null));
 
     const placeShip = (ship, x, y, isVert) => {
-        let coordinates = [];
-
         for (let i = 0; i < ship.length; i++) {
             if (isVert) {
-                coordinates.push([x, y + i]);
+                board[y + i][x] = ship;
             } else {
-                coordinates.push([x + i, y]);
+                board[y][x+ i] = ship;
             }
         }
-
-        const placement = {
-            ship: ship,
-            coordinates: coordinates
-        };
-
-        occupiedSpots.push(placement);
     };
 
     const getShipLocation = (shipObject) => {
-        const placement = occupiedSpots.find(p => p.ship.name === shipObject.name);
-        
-        return placement ? placement.coordinates : [];
+        const coords = [];
+        for (let y = 0; y < 10; y++) {
+            for (let x = 0; x < 10; x++) {
+                if (board[y][x] === shipObject) {
+                    coords.push({ x, y });
+                }
+            }
+        }
+        return coords;
     };
+
+
+    const receiveAttack = (x, y) => {
+        const target = board[y][x];
+    
+        if (target !== null) {
+            target.hit();
+            return board[y][x] = 'hit';
+        }
+
+        if (target === 'hit' || target === 'miss') {
+            return 'already attacked';
+        }
+
+        return board[y][x] = 'miss'
+    };
+
+    const getMisses = (x, y) => {
+        const coords = [];
+        for (let y = 0; y < 10; y++) {
+            for (let x = 0; x < 10; x++) {
+                if (board[y][x] === 'miss') {
+                    coords.push({ x, y });
+                }
+            }
+        }
+        return coords;
+    }
 
     return {
         placeShip,
-        getShipLocation
+        getShipLocation,
+        receiveAttack,
+        getMisses
     };
 };

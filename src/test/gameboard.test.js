@@ -9,10 +9,13 @@ it('is able to place ship in the right spot', () => {
     
     let location = testGameBoard.getShipLocation(myShip);
 
-    expect(location).toEqual([[2, 2], [2, 3]]);
+    expect(location).toEqual([
+        { x: 2, y: 2 }, 
+        { x: 2, y: 3 }
+    ]);
 });
 
-it.skip('can recive attacks', () => {
+it('can recive attacks', () => {
     const myShip = newShip(2, 'cruiser');
     const testGameBoard = gameboard();
 
@@ -22,17 +25,17 @@ it.skip('can recive attacks', () => {
     expect(testGameBoard.receiveAttack(2, 3)).toBe('hit');
 });
 
-it.skip('records missed shots correctly', () => {
+it('records missed shots correctly', () => {
     const testGameboard = gameboard();
 
     const attackResult = testGameboard.receiveAttack(5, 5);
 
     expect(attackResult).toBe('miss');
 
-    expect(testGameboard.getMisses()).toContainEqual([5, 5]);
+    expect(testGameboard.getMisses()).toMatchObject([{ x: 5, y: 5 }]);
 });
 
-it.skip('should not allow ships to overlap', () => {
+it('should not allow ships to overlap', () => {
     const testGameboard = gameboard();
     const ship1 = newShip(3);
     const ship2 = newShip(3);

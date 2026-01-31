@@ -1,17 +1,11 @@
-export const newShip = (len) => {
-    const length = len;
+export const newShip = (len, name) => {
     let hits = 0;
 
-    const getLength = () => length;
-    const hit = () => hits++;
-    const getHits = () => hits;
-
-    const isSunk = () => hits >= length;
-
     return {
-        getLength,
-        hit,
-        isSunk,
-        getHits
-    }
-}
+        name,
+        length: len, 
+        hit() { hits++; },
+        getHits() { return hits; },
+        isSunk() { return hits >= len; }
+    };
+};

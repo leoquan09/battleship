@@ -42,16 +42,16 @@ it('should not allow ships to overlap', () => {
 
     testGameboard.placeShip(ship1, 0, 0, true);
 
-    const isPlacementSuccessful = testGameboard.placeShip(ship2, 1, 0, false);
+    const isPlacementSuccessful = testGameboard.placeShip(ship2, 0, 0, false);
 
     expect(isPlacementSuccessful).toBe(false);
 });
 
-it.skip('should not allow ships to be placed out of bounds', () => {
+it('should not allow ships to be placed out of bounds', () => {
     const testGameboard = gameboard();
     const longShip = newShip(5);
 
-    const isPlacementSuccessful = testGameboard.placeShip(longShip, 7, 0, true);
+    const isPlacementSuccessful = testGameboard.placeShip(longShip, 20, 0, true);
 
     expect(isPlacementSuccessful).toBe(false);
 });
@@ -61,9 +61,8 @@ it.skip('should not allow hitting the same coordinate twice', () => {
     const ship = newShip(2);
     testGameboard.placeShip(ship, 0, 0, true);
 
-    testGameboard.receiveAttack(0, 0); // First attack: 'hit'
+    testGameboard.receiveAttack(0, 0); 
     
-    // This could return 'already attacked', false, or an error depending on your design
     const secondAttack = testGameboard.receiveAttack(0, 0);
     
     expect(secondAttack).toBe('already attacked');
@@ -77,7 +76,7 @@ it.skip('should track multiple missed shots', () => {
     testGameboard.receiveAttack(9, 9);
 
     const misses = testGameboard.getMisses();
-    expect(misses).toContainEqual([1, 1]);
+    expect(misses).toContainEqual({ x: 1, y: 1 });
     expect(misses).toContainEqual([5, 5]);
     expect(misses).toContainEqual([9, 9]);
     expect(misses.length).toBe(3);

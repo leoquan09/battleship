@@ -2,14 +2,30 @@ export const gameboard = () => {
     const board = [...Array(10)].map(() => Array(10).fill(null));
 
     const placeShip = (ship, x, y, isVert) => {
-        for (let i = 0; i < ship.length; i++) {
-            if (isVert) {
-                board[y + i][x] = ship;
-            } else {
-                board[y][x+ i] = ship;
-            }
+
+    for (let i = 0; i < ship.length; i++) {
+        let checkX = isVert ? x : x + i;
+        let checkY = isVert ? y + i : y;
+
+        if (checkX < 0 || checkX >= 10 || checkY < 0 || checkY >= 10) {
+            return false; 
         }
-    };
+
+        if (board[checkY][checkX] !== null) {
+            return false;
+        }
+    }
+
+    for (let i = 0; i < ship.length; i++) {
+        if (isVert) {
+            board[y + i][x] = ship;
+        } else {
+            board[y][x + i] = ship;
+        }
+    }
+
+    return true; 
+};
 
     const getShipLocation = (shipObject) => {
         const coords = [];

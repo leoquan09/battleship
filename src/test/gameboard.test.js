@@ -56,7 +56,7 @@ it('should not allow ships to be placed out of bounds', () => {
     expect(isPlacementSuccessful).toBe(false);
 });
 
-it.skip('should not allow hitting the same coordinate twice', () => {
+it('should not allow hitting the same coordinate twice', () => {
     const testGameboard = gameboard();
     const ship = newShip(2);
     testGameboard.placeShip(ship, 0, 0, true);
@@ -68,7 +68,7 @@ it.skip('should not allow hitting the same coordinate twice', () => {
     expect(secondAttack).toBe('already attacked');
 });
 
-it.skip('should track multiple missed shots', () => {
+it('should track multiple missed shots', () => {
     const testGameboard = gameboard();
 
     testGameboard.receiveAttack(1, 1);
@@ -77,12 +77,12 @@ it.skip('should track multiple missed shots', () => {
 
     const misses = testGameboard.getMisses();
     expect(misses).toContainEqual({ x: 1, y: 1 });
-    expect(misses).toContainEqual([5, 5]);
-    expect(misses).toContainEqual([9, 9]);
+    expect(misses).toContainEqual({ x: 5, y: 5 });
+    expect(misses).toContainEqual({ x: 9, y: 9 });
     expect(misses.length).toBe(3);
 });
 
-it.skip('reports when all ships have been sunk', () => {
+it('reports when all ships have been sunk (Vertically)', () => {
     const testGameboard = gameboard();
     const ship1 = newShip(1);
     const ship2 = newShip(2);
@@ -93,12 +93,13 @@ it.skip('reports when all ships have been sunk', () => {
     testGameboard.receiveAttack(0, 0);
 
     testGameboard.receiveAttack(5, 5);
-    testGameboard.receiveAttack(6, 5);
+    testGameboard.receiveAttack(5, 6);
+    testGameboard.receiveAttack(9,9)
 
     expect(testGameboard.allShipsSunk()).toBe(true);
 });
 
-it.skip('allShipsSunk should return false if some ships are still afloat', () => {
+it('allShipsSunk should return false if some ships are still afloat', () => {
     const testGameboard = gameboard();
     const ship1 = newShip(1);
     const ship2 = newShip(2);
@@ -106,32 +107,27 @@ it.skip('allShipsSunk should return false if some ships are still afloat', () =>
     testGameboard.placeShip(ship1, 0, 0, true);
     testGameboard.placeShip(ship2, 5, 5, true);
 
-    // Sink only the first ship
     testGameboard.receiveAttack(0, 0);
 
     expect(testGameboard.allShipsSunk()).toBe(false);
 });
 
-it.skip('should call hit() on the correct ship when attacked', () => {
+it('should call hit() on the correct ship when attacked', () => {
     const testGameboard = gameboard();
     const ship1 = newShip(2);
     const ship2 = newShip(3);
 
-    testGameboard.placeShip(ship1, 0, 0, true);  // [0,0], [0,1]
-    testGameboard.placeShip(ship2, 5, 5, false); // [5,5], [6,5], [7,5]
+    testGameboard.placeShip(ship1, 0, 0, true); 
+    testGameboard.placeShip(ship2, 5, 5, false);
 
-    // Attack ship1
     testGameboard.receiveAttack(0, 1);
 
-    // If your ship object has a way to check hits, use that.
-    // Let's assume ship.getHits() returns the number of hits.
     expect(ship1.getHits()).toBe(1);
     
-    // Ensure ship2 was NOT hit
     expect(ship2.getHits()).toBe(0);
 });
 
-it.skip('should return "hit" when a ship is struck', () => {
+it('should return "hit" when a ship is struck', () => {
     const testGameboard = gameboard();
     const ship = newShip(2);
     testGameboard.placeShip(ship, 0, 0, true);

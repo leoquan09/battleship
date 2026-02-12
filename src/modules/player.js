@@ -1,13 +1,10 @@
+import { gameboard } from "./gameboard"; 
+
 export const Player = (name, type) => {
-
-    const attack = (coords, board) => {
-        const x = coords[0];
-        const y = coords[1];
-         return board.receiveAttack(x, y);
-    }
-
     const getName = () => name;
     const getType = () => type;
+    const board = gameboard();
+    const getBoard = () => board;
 
     const getRandomCoords = (board) => {
         const misses = board.getMisses();
@@ -27,5 +24,5 @@ export const Player = (name, type) => {
         return [x, y];
     }
 
-    return { attack, getRandomCoords, getName, getType }
+    return { getRandomCoords, getName, getBoard, getType }
 }

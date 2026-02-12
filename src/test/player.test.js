@@ -1,16 +1,5 @@
 import { Player } from '../modules/player.js';
 
-it('can attack an enemy board', () => {
-    const player = Player('Leo');
-    const fakeBoard = {
-        receiveAttack: jest.fn()
-    };
-
-    player.attack([5, 2], fakeBoard);
-    expect(fakeBoard.receiveAttack).toHaveBeenCalledWith(5, 2);
-    expect(fakeBoard.receiveAttack).toHaveBeenCalledTimes(1);
-});
-
 test('Computer player picks a coordinate not already in allShots', () => {
   const computer = Player('AI', 'computer');
   
@@ -37,16 +26,4 @@ test('Player factory correctly assigns types', () => {
 test('Player object stores the name correctly', () => {
   const player = Player('Sarah');
   expect(player.getName()).toBe('Sarah');
-});
-
-test('Player receives the result of the attack from the board', () => {
-  const player = Player('Leo');
-  
-  const mockBoard = {
-    receiveAttack: jest.fn().mockReturnValue('hit')
-  };
-
-  const result = player.attack([1, 1], mockBoard);
-
-  expect(result).toBe('hit');
 });

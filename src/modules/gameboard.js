@@ -56,6 +56,19 @@ export const gameboard = () => {
         return misses;
     }
 
+    const getHits = () => {
+        const misses = [];
+        for (let y = 0; y < 10; y++) {
+            for (let x = 0; x < 10; x++) {
+                const cell = board[y][x];
+                if (cell.attacked !== null && cell.ship !== null) {
+                    misses.push({ x, y });
+                }
+            }
+        }
+        return misses;
+    }
+
     const getShipLocation = (shipObject) => {
         const coords = [];
         for (let y = 0; y < 10; y++) {
@@ -75,5 +88,5 @@ export const gameboard = () => {
         });
     }
 
-    return { placeShip, receiveAttack, getShipLocation, getMisses, allShipsSunk };
+    return { placeShip, receiveAttack, getShipLocation, getMisses, allShipsSunk, getHits };
 };

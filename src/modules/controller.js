@@ -36,19 +36,19 @@ export const controller = (p1, p2) => {
     }
 
     const playRound = (coord) => {
-    const humanMove = makeMove(coord);
-    if (!humanMove) return false; 
+        const humanMove = makeMove(coord);
+        if (!humanMove) return false; 
 
-    changeTurn();
-
-    if (activePlayer.getType() === 'computer') {
-        const compCoord = getCompMove();
-        makeMove(compCoord);
         changeTurn();
-    }
-    
-    return true;
-};
+
+        if (activePlayer.getType() === 'computer') {
+            const compCoord = getCompMove();
+            makeMove(compCoord);
+            changeTurn();
+        }
+        
+        return true;
+    };
 
     const getMisses = (player) => {
         return player.getBoard().getMisses();

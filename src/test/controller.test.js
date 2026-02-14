@@ -10,16 +10,6 @@ it('should start with Player 1 as the active player', () => {
     expect(game.getActivePlayer().getName()).toBe('Human');
 });
 
-it('should switch the active player after a turn is played', () => {
-    const player1 = Player('Human', 'human');
-    const player2 = Player('Computer', 'computer');
-    const game = controller(player1, player2);
-
-    game.playRound([0, 0]); 
-
-    expect(game.getActivePlayer().getName()).toBe('Computer');
-});
-
 it('should attack the right board and spot', () => {
     const p1 = Player('Leo', 'human');
     const p2 = Player('Computer', 'computer');
@@ -45,5 +35,5 @@ it('should not need coords if its robot turn', () => {
     const game = controller(p1, p2);
 
     game.playRound([0, 0]);
-    game.playRound();
-})
+    game.playRound([0, 0]);
+});

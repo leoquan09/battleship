@@ -6,6 +6,10 @@ export const gameboard = () => {
         }))
     );
 
+    const getBoard = () => {
+        return board;
+    }
+
     const placeShip = (ship, x, y, isVert) => {
         for (let i = 0; i < ship.length; i++) {
             let checkX = isVert ? x : x + i;
@@ -88,5 +92,5 @@ export const gameboard = () => {
         });
     }
 
-    return { placeShip, receiveAttack, getShipLocation, getMisses, allShipsSunk, getHits };
+    return { placeShip, receiveAttack, getShipLocation, getMisses, allShipsSunk, getHits, getBoard };
 };

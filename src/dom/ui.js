@@ -1,3 +1,4 @@
+import '../styles.css';
 import { Player } from "../modules/player";
 import { newShip } from "../modules/ship.js";
 import { controller } from "../modules/controller";
@@ -10,14 +11,35 @@ export const ui = () => {
     const player2 = Player('Rob', 'computer');
 
     const init = () => {
-        drawBoard(player1);
-        drawBoard(player2);
+        drawBoard(player1, humanBoard);
+        drawBoard(player2, robotBoard);
     }
 
-    const drawBoard = (board) => {
-        board.getBoard().getBoard().forEach(element => {
-            console.log(element);
+    const getBoardStatus = (player) => {
+        return player.getBoard().getBoard();
+    }
+
+    const drawBoard = (player, board) => {
+        board.innerHTML = '';
+        const fragment = document.createDocumentFragment();
+
+        getBoardStatus(player).forEach(row => {
+
+            row.forEach(spot => {
+                const cell = document.createElement('div');
+
+                if (spot.attacked === 'hit') {
+                    cell.className = 'cell hit';
+                } else if (spot.attacked === 'miss') {
+                    cell.className = 'cell miss';
+                } else {
+                    cell.className = 'cell spot';
+                }
+                fragment.appendChild(cell);
+            });
         });
+
+        board.appendChild(fragment);
     }
 
     return { init };

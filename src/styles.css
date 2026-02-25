@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  --bg-dark: #05050a;
+  --neon-green: #2ecc71;
+  --hit-red: #ff4757;
+  --empty-blue: #16213e;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--neon-green);
+    text-shadow: 4px 4px 0px #1b5e20;
+    margin-bottom: 30px;
+    position: relative;
+    animation: pulseGlow 2s infinite ease-in-out, glitch 5s infinite;
+}
+
+.label {
+  text-align: center;
+    font-size: 1rem;
+    color: var(--neon-green);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    animation: blink 1.5s steps(2) infinite;
+}
+
+.board-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* The container holding both boards */
+#content {
+  display: flex;
+  gap: 50px; /* Space between the two boards */
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Style BOTH the human and robot boards */
+#human, #robot {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  width: 350px;
+  height: 350px;
+  gap: 2px;
+  background-color: var(--neon-green);
+  border: 4px solid var(--neon-green);
+  box-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+#human::before, #robot::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: rgba(46, 204, 113, 0.2);
+  box-shadow: 0 0 15px var(--neon-green);
+  animation: sweep 4s linear infinite;
+  pointer-events: none; /* So you can still click the cells */
+  z-index: 5;
+}
+
+.cell {
+  width: 100%;
+  height: 100%;
+}
+
+.spot { background-color: var(--empty-blue); }
+.hit { background-color: var(--hit-red); display: flex; align-items: center; justify-content: center; font-size: 10px; }
+.hit::after { content: 'X'; }
+.miss { background-color: #57606f; transform: scale(0.3); border-radius: 50%; }
+
+/* animations */
+
+@keyframes pulseGlow {
+    0%, 100% { filter: drop-shadow(0 0 5px var(--neon-green)); }
+    50% { filter: drop-shadow(0 0 20px var(--neon-green)); }
+}
+
+@keyframes glitch {
+    0%, 90%, 100% { transform: translate(0); }
+    91% { transform: translate(2px, -1px); text-shadow: -2px 0 red, 2px 0 blue; }
+    93% { transform: translate(-2px, 1px); }
+    95% { transform: translate(1px, -2px); text-shadow: 2px 0 red, -2px 0 blue; }
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+@keyframes sweep {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}

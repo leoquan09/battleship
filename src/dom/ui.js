@@ -7,8 +7,10 @@ export const ui = () => {
     const humanBoard = document.querySelector('#human');
     const robotBoard = document.querySelector('#robot');
 
+    
     const player1 = Player('Leo', 'human');
     const player2 = Player('Rob', 'computer');
+    const game = controller(player1, player2);
 
     const init = () => {
         drawBoard(player1, humanBoard);
@@ -23,9 +25,12 @@ export const ui = () => {
         board.innerHTML = '';
         const fragment = document.createDocumentFragment();
 
-        getBoardStatus(player).forEach(row => {
+        placeShips(player1);
+        placeShips(player2);
 
-            row.forEach(spot => {
+        getBoardStatus(player).forEach((row, y) => {
+
+            row.forEach((spot, x) => {
                 const cell = document.createElement('div');
 
                 if (spot.attacked === 'hit') {
@@ -36,10 +41,26 @@ export const ui = () => {
                     cell.className = 'cell spot';
                 }
                 fragment.appendChild(cell);
+
+                let coords = [x, y];
+
+                cell.addEventListener('click', () => {
+                    game.playRound(coords);
+                    drawBoard(player1, humanBoard);
+                    drawBoard(player2, robotBoard);
+                });
             });
         });
 
         board.appendChild(fragment);
+    }
+
+    const placeShips = (player) => {
+        const carrier = newShip(4, 'carrier');
+        const cruiser = newShip(3, 'cruiser');
+        const steamBoat = newShip(2, 'steamboat');
+        const miniShip = newShip(1, 'miniShip');
+        player.getBoard().placeShips()                                          
     }
 
     return { init };

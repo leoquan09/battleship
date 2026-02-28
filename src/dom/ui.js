@@ -15,6 +15,8 @@ export const ui = () => {
     const init = () => {
         drawBoard(player1, humanBoard);
         drawBoard(player2, robotBoard);
+        placeShips(player1);
+        placeShips(player2);
     }
 
     const getBoardStatus = (player) => {
@@ -24,9 +26,6 @@ export const ui = () => {
     const drawBoard = (player, board) => {
         board.innerHTML = '';
         const fragment = document.createDocumentFragment();
-
-        placeShips(player1);
-        placeShips(player2);
 
         getBoardStatus(player).forEach((row, y) => {
 
@@ -60,7 +59,11 @@ export const ui = () => {
         const cruiser = newShip(3, 'cruiser');
         const steamBoat = newShip(2, 'steamboat');
         const miniShip = newShip(1, 'miniShip');
-        player.getBoard().placeShips()                                          
+        player.getBoard().placeShip(carrier, 1, 1, true);
+        player.getBoard().placeShip(cruiser, 3, 5, false);
+        player.getBoard().placeShip(steamBoat, 3, 1, true);
+        player.getBoard().placeShip(miniShip, 9, 9, true);
+
     }
 
     return { init };
